@@ -1,3 +1,5 @@
+# Draws two series of concentric circles which start on the outer edges of the canvas, both of whose origin positions are randomized and slightly inverse from one another.
+
 def drawEllipses(cx, cy, rx, ry, dx, dy, n):
     for i in range(n):
         fill(0, 0, 0, 0)
