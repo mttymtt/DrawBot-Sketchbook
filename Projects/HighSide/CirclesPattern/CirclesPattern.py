@@ -42,4 +42,4 @@ maxStep, maxStep, numEllipses)
 drawEllipses(xPositionBottom, yPositionBottom, radius, radius,
 maxStep, maxStep, numEllipses)
 
-saveImage("~/Desktop/HighSide_Test.pdf")
+saveImage("_Output/HighSide_CirclesPattern_01.pdf")
