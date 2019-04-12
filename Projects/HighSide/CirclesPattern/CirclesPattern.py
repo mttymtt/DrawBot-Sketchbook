@@ -1,5 +1,7 @@
 # Draws two series of concentric circles which start on the outer edges of the canvas, both of whose origin positions are randomized and slightly inverse from one another.
 
+# Adopted from Just van Rossum's Ellipses.py which can be found here: https://gist.github.com/justvanrossum/ff716d82a2b3345c3c84255761fc44a4
+
 def drawEllipses(cx, cy, rx, ry, dx, dy, n):
     for i in range(n):
         fill(0, 0, 0, 0)
@@ -44,4 +46,4 @@ maxStep, maxStep, numEllipses)
 drawEllipses(xPositionBottom, yPositionBottom, radius, radius,
 maxStep, maxStep, numEllipses)
 
-saveImage("_Output/HighSide_CirclesPattern_01.pdf")
+# saveImage("HighSide_CirclesPattern_01.pdf")
