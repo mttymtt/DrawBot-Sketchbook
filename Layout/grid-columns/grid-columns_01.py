@@ -1,22 +1,24 @@
+size('Letter')
 inch = 72
-margin = (1 / 2) * inch * 2
-grid_col = (1 / 4) * inch
-grid_interval = 2
+margin = (1 / 2) * inch
+col_num = 12
+col_gap = (1 / 4) * inch
+col_width = ((( width() - (margin * 2) ) - ( col_gap * (col_num - 1) )) / col_num)
 
-def grid():
+def columns():
     stroke(None)
     fill(1,0,0,0.2)
-    for i in range(0, width(), grid_interval):
-        rect((i*grid_col), margin/2, grid_col, height()-margin)
+    translate( (margin + col_width), 0)
+    for i in range((col_num - 1)):
+        rect( (i * (col_width + col_gap)), margin, col_gap, (height() - (margin * 2)) )
 
 def new_page():
-    size('Letter')
     stroke(1,0,0)
     strokeWidth(1)
     fill(None)
-    rect(margin/2, margin/2, width()-margin, height()-margin)
+    rect(margin, margin, (width() - (margin*2)), (height() - (margin * 2)) )
     
-    grid()
+    #Draw columns on each page
+    columns()
     
 new_page()
-print(sizes())
