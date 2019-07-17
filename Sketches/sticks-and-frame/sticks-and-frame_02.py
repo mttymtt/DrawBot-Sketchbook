@@ -59,8 +59,17 @@ def matthew_smith():
         # draw a rectangle at the half way point of the for loop
         if i == total_lines / 2:
             with savedState():
-                cmykStroke(0, 0, 0, 1)
-                strokeWidth(10)
+                blendMode("screen")
+                cmykStroke(None)
+                strokeWidth(None)
+                cmykRadialGradient(
+                    (center_horizontal, center_vertical),                         # startPoint
+                    (center_horizontal, center_vertical),                         # endPoint
+                    [(0, 0, 0, 0), (0, 0, 0, 1)],  # colors
+                    [0.2, 0.5],                         # locations
+                    0,                                  # startRadius
+                    live_height-(margin*2)                                 # endRadius
+                    )
                 rotate(randint(-20, 20), center=(center_horizontal, center_vertical))
                 rect( margin_left+margin, margin_bottom+margin, live_width-(margin*2), live_height-(margin*2) )
 
