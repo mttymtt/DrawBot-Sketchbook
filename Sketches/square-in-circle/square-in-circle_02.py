@@ -23,4 +23,4 @@ for i in range(10):
         )
     oval( ((width() - diameter) / 2), ((height() - diameter) / 2), diameter, diameter)
     
-saveImage("square-in-circle_02.png")
+# saveImage("square-in-circle_02.png")
