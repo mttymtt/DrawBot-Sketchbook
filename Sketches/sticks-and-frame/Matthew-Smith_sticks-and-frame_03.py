@@ -1,17 +1,3 @@
-import os
-
-# FILENAME
-basename = os.path.splitext(os.path.basename(__file__))[0]
-file_detail = ""
-version = "01"
-format = ".pdf"
-if file_detail != "":
-    filename = basename + "_" + file_detail + "_" + version + format
-else:
-    filename = basename + "-" + version + format
-
-export = False
-
 total_pages = 6
 
 def matthew_smith():
@@ -98,8 +84,3 @@ def matthew_smith():
 # Produce a drawing for each page
 for page_number in range(total_pages):
     matthew_smith()
-    
-
-
-if export == True:
-    saveImage(filename)

@@ -4,7 +4,7 @@ import os
 basename = os.path.splitext(os.path.basename(__file__))[0]
 file_detail = ""
 version = "01"
-format = ".pdf"
+format = ".png"
 if file_detail != "":
     filename = basename + "_" + file_detail + "_" + version + format
 else:
@@ -12,21 +12,21 @@ else:
 
 export = False
 
-total_pages = 6
+total_pages = 10
 
 def matthew_smith():
-    newPage("A5")
+    newPage(1080, 1080)
     
     inch = 72
-    margin = (1) * inch
+    margin = (2) * inch
     
     live_width = width() - (margin * 2)
     live_height = height() - (margin * 2)
     
     margin_bottom = margin
-    margin_left = margin
+    margin_left = margin * 2
     margin_top = height() - margin
-    margin_right = width() - margin
+    margin_right = width() - (margin * 2)
     
     center_horizontal = width() / 2
     center_vertical = height() / 2
@@ -34,7 +34,7 @@ def matthew_smith():
     # determine size of circle mask
     # size is relative to width of document
     # or it'll max out at what is defined below
-    relative_size = live_width - (margin * 2.5)
+    relative_size = live_width - (margin * 4)
     max_size = 4 * inch
     
     fill(None)
@@ -45,7 +45,7 @@ def matthew_smith():
         else:
             mask_width = relative_size
             
-        mask_height = mask_width * 3
+        mask_height = mask_width * 2.5
         
         rotate(randint(-20, 20), center=(center_horizontal, center_vertical))
         rect( (width() - mask_width) / 2, (height() - mask_height) / 2, mask_width, mask_height )
@@ -58,7 +58,7 @@ def matthew_smith():
             with savedState():
                 # change color of lines
                 cmykStroke(0, 0, 0, i * color_step)
-                strokeWidth(5)
+                strokeWidth(width() / 75)
                 # lineCap("round")
         
                 # first point
@@ -71,6 +71,10 @@ def matthew_smith():
     
                 # draw the line
                 line((x1, y1), (x2, y2))
+    
+    with savedState():
+        fill(1)
+        rect(0,0,height(),width())
     
     # draw the lines in the background
     stack()
@@ -102,4 +106,4 @@ for page_number in range(total_pages):
 
 
 if export == True:
-    saveImage(filename)
+    saveImage(filename, multipage="True")
