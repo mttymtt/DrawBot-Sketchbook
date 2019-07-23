@@ -1,6 +1,6 @@
 # IMPORTS
+import string
 import datetime
-# from GlyphsApp import *
 
 # --------------------------------------
 # FONT INFORMATION
@@ -18,11 +18,14 @@ current_time = d.strftime('%H:%M')
 # --------------------------------------
 # PAGE INFORMATION
 
+show_grid = True
+show_labels = True
+
 inch = 72
 
 margin = (1/2) * inch
 number_of_columns = 12
-number_of_rows = 36
+number_of_rows = 48
 
 newPage("LetterLandscape")
 
@@ -44,13 +47,20 @@ edge_bottom = 0
 def new_page(section):
     newPage("LetterLandscape")
     
-    # eventually make these toggle-able
-    draw_grid()
-    label_grid()
+    grid()
     
     metadata(section)
     
     translate(margin, margin)
+    
+# --------------------------------------
+# BASE PAGE FUNCTION
+
+def grid():
+    if show_grid == True:
+        draw_grid()
+    if show_labels == True:
+        label_grid()
 
 # --------------------------------------
 # META FUNCTIONS
@@ -174,45 +184,70 @@ def title_page(section=""):
 # --------------------------------------
 # CHARACTER SET
 
-for i in range(3):
-    new_page("Character Set")
+# for i in range(3):
+#     new_page("Character Set")
     
 # --------------------------------------
 # SPACING
     
-for i in range(3):
-    new_page("Spacing")
-    with savedState():
-        textbox_height = 4
-        x, y, w, h = x_cord["0"], y_cord[str(number_of_rows - 3 - textbox_height)], live_width, row_height * textbox_height
-        fill(1, 0, 0, 0.25)
-        rect(x, y, w, h)
-        fill(0)
-        font(font_name, 49)
+new_page("Spacing")
+modifier = 8
+y_pos_1 = 40 + modifier
+y_pos_2 = y_pos_1 - 2
+for i in string.ascii_uppercase:
+    while y_pos_2 > 0:
+        y_pos_1 -= modifier
+        y_pos_2 -= modifier
         
-        txt = "This is a test"
+        if y_pos_2 < 0:
+            break
         
-        baseline = textBoxBaselines(txt, (x, y, w, h))
-        
+        print(y_pos_1)
+        print(y_pos_2)
         with savedState():
-            translate(0, (baseline[0][-1] - y) / -2)
-            stroke(0, 0, 1, 0.5)
-            # draw cap height
-            line( (x, baseline[0][-1] + fontAscender()), (w, baseline[0][-1] + fontAscender()) )
-            # draw cap height
-            line( (x, baseline[0][-1] + fontCapHeight()), (w, baseline[0][-1] + fontCapHeight()) )
-            # draw x-height
-            line( (x, baseline[0][-1] + fontXHeight()), (w, baseline[0][-1] + fontXHeight()) )
-            # draw baseline
-            line( (x, baseline[0][-1]), (w, baseline[0][-1]) )
+            fill(0)
+            for k in range(2):
+                txt = "HH" + str(i) + "HHOO" + str(i) + "OO"
+                font_size = 48
+                font(font_name, font_size)
+                textWidth, textHeight = textSize(txt)
             
-            # draw descender
-            line( (x, baseline[0][-1] + fontDescender()), (w, baseline[0][-1] + fontDescender()) )
+                text( txt + txt.lower(), (x_cord["0"], y_cord[str(y_pos_1)]) )
+                meta_style()
+                text( f"{font_size}pt", (x_cord["0"], y_cord[str(y_pos_2)]) )
 
-        # baselineShift( y - baseline[0][-1] )
-        baselineShift((baseline[0][-1] - y) / -2)
-        textBox( txt, (x, y, w, h) )
+# for i in range(3):
+#     new_page("Spacing")
+#     with savedState():
+#         textbox_height = 4
+#         x, y, w, h = x_cord["0"], y_cord[str(number_of_rows - 3 - textbox_height)], live_width, row_height * textbox_height
+#         fill(1, 0, 0, 0.25)
+#         rect(x, y, w, h)
+#         fill(0)
+#         font(font_name, 49)
+        
+#         txt = "This is a test"
+        
+#         baseline = textBoxBaselines(txt, (x, y, w, h))
+        
+#         with savedState():
+#             translate(0, (baseline[0][-1] - y) / -2)
+#             stroke(0, 0, 1, 0.5)
+#             # draw cap height
+#             line( (x, baseline[0][-1] + fontAscender()), (w, baseline[0][-1] + fontAscender()) )
+#             # draw cap height
+#             line( (x, baseline[0][-1] + fontCapHeight()), (w, baseline[0][-1] + fontCapHeight()) )
+#             # draw x-height
+#             line( (x, baseline[0][-1] + fontXHeight()), (w, baseline[0][-1] + fontXHeight()) )
+#             # draw baseline
+#             line( (x, baseline[0][-1]), (w, baseline[0][-1]) )
+            
+#             # draw descender
+#             line( (x, baseline[0][-1] + fontDescender()), (w, baseline[0][-1] + fontDescender()) )
 
+#         # baselineShift( y - baseline[0][-1] )
+#         baselineShift((baseline[0][-1] - y) / -2)
+#         textBox( txt, (x, y, w, h) )
 
 
 
@@ -236,8 +271,7 @@ for page in allPages:
     if page_number == 1:
         # style first page
         with page:
-            draw_grid()
-            label_grid()
+            grid()
             title_page("")
     else:
         # set next page as current context & add page number
