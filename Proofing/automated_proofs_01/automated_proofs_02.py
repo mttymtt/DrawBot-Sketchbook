@@ -1,7 +1,7 @@
 # IMPORTS
 import string
 import datetime
-from proofer import *
+from proofbot import *
 
 # --------------------------------------
 # FONT INFORMATION
