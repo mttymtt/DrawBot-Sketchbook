@@ -1,7 +1,7 @@
 # IMPORTS
 import string
 import datetime
-from proofbot import *
+from proofbot.numbers import pi1000
 
 # --------------------------------------
 # FONT INFORMATION
@@ -204,7 +204,7 @@ title_page()
 # SPACING
     
 new_page("Spacing")
-text(numbers.pi1000.pi1000(50), (0, 0))
+text(pi1000.pi1000(50), (0, 0))
 
 
 
