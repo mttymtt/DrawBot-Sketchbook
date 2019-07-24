@@ -1,6 +1,7 @@
 # IMPORTS
 import string
 import datetime
+from proofer import *
 
 # --------------------------------------
 # FONT INFORMATION
@@ -21,20 +22,28 @@ current_time = d.strftime('%H:%M')
 show_grid = True
 show_labels = True
 
+# page size
+page_size = "LetterLandscape"
+page_width, page_height = sizes(paperSize=page_size)
+
+# unit of measurement
 inch = 72
 
+# margin
 margin = (1/2) * inch
+
+# safe area
+live_width = page_width - (margin * 2)
+live_height = page_height - (margin * 2)
+
+# columns & rows
 number_of_columns = 12
 number_of_rows = 48
-
-newPage("LetterLandscape")
-
-live_width = width() - (margin * 2)
-live_height = height() - (margin * 2)
 
 col_width = live_width / number_of_columns
 row_height = live_height / number_of_rows
 
+# edges
 edge_left = 0
 edge_right = live_width
 edge_top = live_height
@@ -52,6 +61,14 @@ def new_page(section):
     metadata(section)
     
     translate(margin, margin)
+    
+# --------------------------------------
+# TITLE PAGE
+
+def title_page():
+    with savedState():
+        font(font_name, 100)
+        text(font_name, (edge_left, y_cord["28"]))
     
 # --------------------------------------
 # BASE PAGE FUNCTION
@@ -101,22 +118,21 @@ zip_x_cords = zip(x_cord_name_list, x_cord_num_list)
 y_cord_dict = dict(zip(y_cord_name_list, y_cord_num_list))
 zip_y_cords = zip(y_cord_name_list, y_cord_num_list)
 
-with savedState():
-    for x in range(number_of_columns + 1):
+for x in range(number_of_columns + 1):
+    
+    col_name = str(x)
+    x_cord = str(x * col_width)
+    
+    x_cord_name_list.append(col_name)
+    x_cord_num_list.append(float(x_cord))
+    
+    for y in range(number_of_rows + 1):
         
-        col_name = str(x)
-        x_cord = str(x * col_width)
+        row_name = str(y)
+        y_cord = str(y * row_height)
         
-        x_cord_name_list.append(col_name)
-        x_cord_num_list.append(float(x_cord))
-        
-        for y in range(number_of_rows + 1):
-            
-            row_name = str(y)
-            y_cord = str(y * row_height)
-            
-            y_cord_name_list.append(row_name)
-            y_cord_num_list.append(float(y_cord))                
+        y_cord_name_list.append(row_name)
+        y_cord_num_list.append(float(y_cord))                
                 
 # Create a dictionary from zip object
 x_cord = dict(zip_x_cords)
@@ -154,15 +170,6 @@ def label_grid():
         for y in range(number_of_rows + 1):
             text(str(y), (margin / -2, y_cord[str(y)]), align="center")
 
-# --------------------------------------
-# TITLE PAGE
-
-def title_page(section=""):
-    metadata(section)
-    with savedState():
-        translate(margin, margin)
-        font(font_name, 100)
-        text(font_name, (edge_left, y_cord["28"]))
 
 
 # --------------------------------------
@@ -182,6 +189,12 @@ def title_page(section=""):
 
 
 # --------------------------------------
+# TITLE PAGE
+
+new_page("")
+title_page()
+
+# --------------------------------------
 # CHARACTER SET
 
 # for i in range(3):
@@ -191,7 +204,7 @@ def title_page(section=""):
 # SPACING
     
 new_page("Spacing")
-
+text(numbers.pi1000.pi1000(50), (0, 0))
 
 
 
@@ -211,17 +224,12 @@ for page in allPages:
     # each time it loops through, add 1 to the page number
     page_number += 1
     
-    # set first page as current context
-    if page_number == 1:
-        # style first page
-        with page:
-            grid()
-            title_page("")
-    else:
+    # set second page as current context
+    if page_number != 1:
         # set next page as current context & add page number
         with page:
             meta_style()
             translate(0, -fontCapHeight())
-            text(str(page_number), (edge_right, edge_top), align="right" )
+            text("pg. " + str(page_number), (edge_right, edge_top), align="right" )
         
         

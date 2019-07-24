@@ -1,1 +1,1 @@
-__all__ = ["Characters", "Context", "Features", "Spacing"] # edit to list all submodules
+__all__ = ["characters", "context", "features", "numbers", "spacing"]
