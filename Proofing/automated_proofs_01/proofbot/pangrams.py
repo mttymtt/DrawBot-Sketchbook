@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
 # --------------------------------------
 #    pi1000()
 #    Returns string
@@ -11,7 +14,7 @@ def pi1000(length=1000):
 # --------------------------------------
 #    n101()
 #    Returns string or list
-#    defaults to string
+#    defualts to string
 
 def n101(arg="string"):
     n101_string = '''1101010000

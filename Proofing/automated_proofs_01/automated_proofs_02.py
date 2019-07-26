@@ -3,6 +3,7 @@ import string
 import datetime
 # from proofbot.numbers import pi1000
 from proofbot import numbers
+from proofbot import spacing
 
 # --------------------------------------
 #    FONT INFORMATION
@@ -150,6 +151,8 @@ for x in range(number_of_columns):
 x_cord = dict(zip_x_cords)
 y_cord = dict(zip_y_cords)
 
+print(x_cord)
+
 # --------------------------------------
 #    DEFINE COLUMN SPANS & OFFSETS
 #    write col_span[4] to span four columns
@@ -232,8 +235,17 @@ title_page()
 #    SPACING
     
 new_page("Numbers")
-textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
-textBox(numbers.n111(), (offset[6], 0, col_span[4], live_height))
+with savedState():
+    fontSize(48)
+    textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
+    textBox(numbers.n111(), (offset[6], 0, col_span[4], live_height))
+
+new_page("Numbers")
+with savedState():
+    fontSize(48)
+    textBox(spacing.OHno(), (0, 0, col_span[6], live_height))
+    fontSize(36)
+    textBox(spacing.OHno("no", "string"), (offset[6], 0, col_span[4], live_height))
 
 
 
