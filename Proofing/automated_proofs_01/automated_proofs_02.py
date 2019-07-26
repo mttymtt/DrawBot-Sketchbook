@@ -1,23 +1,24 @@
 # IMPORTS
 import string
 import datetime
-from proofbot.numbers import pi1000
+# from proofbot.numbers import pi1000
+from proofbot import numbers
 
 # --------------------------------------
-# FONT INFORMATION
+#    FONT INFORMATION
 
 font_name = "Helvetica"
 font_version = "0.001"
 
 # --------------------------------------
-# DATE & TIME
+#    DATE & TIME
 
 d = datetime.datetime.today()
 current_date = d.strftime('%Y-%m-%d')
 current_time = d.strftime('%H:%M')
 
 # --------------------------------------
-# PAGE INFORMATION
+#    PAGE INFORMATION
 
 show_grid = True
 show_labels = True
@@ -31,27 +32,40 @@ inch = 72
 
 # margin
 margin = (1/2) * inch
+half_margin = margin / 2
+
+# general area
+margin_width = page_width - (margin * 2)
+margin_height = page_height - (margin * 2)
 
 # safe area
-live_width = page_width - (margin * 2)
-live_height = page_height - (margin * 2)
+live_width = margin_width
+live_height = margin_height - margin
+
 
 # columns & rows
 number_of_columns = 12
 number_of_rows = 48
 
-col_width = live_width / number_of_columns
+gutter = (1/4) * inch
+
+col_width = (live_width - (number_of_columns - 1) * gutter) / number_of_columns
 row_height = live_height / number_of_rows
+
+col_span = col_width + gutter # write (col_span * 2) to span two columns
 
 # edges
 edge_left = 0
 edge_right = live_width
-edge_top = live_height
+edge_top = margin_height
 edge_bottom = 0
+
+# live area top
+live_top = live_height
 
 
 # --------------------------------------
-# BASE PAGE FUNCTION
+#    BASE PAGE FUNCTION
 
 def new_page(section):
     newPage("LetterLandscape")
@@ -63,7 +77,7 @@ def new_page(section):
     translate(margin, margin)
     
 # --------------------------------------
-# TITLE PAGE
+#    TITLE PAGE
 
 def title_page():
     with savedState():
@@ -71,7 +85,7 @@ def title_page():
         text(font_name, (edge_left, y_cord["28"]))
     
 # --------------------------------------
-# BASE PAGE FUNCTION
+#    BASE PAGE FUNCTION
 
 def grid():
     if show_grid == True:
@@ -80,7 +94,7 @@ def grid():
         label_grid()
 
 # --------------------------------------
-# META FUNCTIONS
+#    META FUNCTIONS
 
 def meta_style():
     fill(0)
@@ -99,11 +113,11 @@ def metadata(section):
         
             text(section, (x_cord["4"], edge_top), align="left" )
         
-            text(current_date, (x_cord[str(number_of_columns - 2)], edge_top), align="right" )
-            text(current_time, (x_cord[str(number_of_columns - 1)], edge_top), align="right" )
+            text(current_date, (x_cord[str(number_of_columns - 2)] - half_margin, edge_top), align="right" )
+            text(current_time, (x_cord[str(number_of_columns - 1)] - half_margin, edge_top), align="right" )
 
 # --------------------------------------
-# DEFINE COORDINATES
+#    DEFINE COORDINATES
 
 x_cord_name_list = list()
 x_cord_num_list = list()
@@ -118,16 +132,14 @@ zip_x_cords = zip(x_cord_name_list, x_cord_num_list)
 y_cord_dict = dict(zip(y_cord_name_list, y_cord_num_list))
 zip_y_cords = zip(y_cord_name_list, y_cord_num_list)
 
-for x in range(number_of_columns + 1):
-    
+for x in range(number_of_columns):
     col_name = str(x)
-    x_cord = str(x * col_width)
+    x_cord = str(x * col_width + (gutter * x))
     
     x_cord_name_list.append(col_name)
     x_cord_num_list.append(float(x_cord))
     
     for y in range(number_of_rows + 1):
-        
         row_name = str(y)
         y_cord = str(y * row_height)
         
@@ -138,9 +150,25 @@ for x in range(number_of_columns + 1):
 x_cord = dict(zip_x_cords)
 y_cord = dict(zip_y_cords)
 
+# --------------------------------------
+#    DEFINE COLUMN SPANS & OFFSETS
+#    write col_span[4] to span four columns
+#    write offset[4] to offset four columns
+
+col_span = list()
+for x in range(number_of_columns + 1):
+    col_span_width = ((col_width + gutter) * x) - (margin / 2)
+    col_span.append(int(col_span_width))
+
+
+offset = list()
+for x in range(number_of_columns + 1):
+    offset_width = ((col_width + gutter) * x)
+    offset.append(int(offset_width))
+
 
 # --------------------------------------
-# DRAW THE GRID
+#    DRAW THE GRID
 
 def draw_grid():
     with savedState():
@@ -149,12 +177,12 @@ def draw_grid():
             for y in range(number_of_rows):
                 with savedState():
                     fill(None)
-                    stroke(1, 0, 0, 0.1)
-                    strokeWidth(0.25)
-                    rect(x * col_width, y * row_height, col_width, row_height)
+                    stroke(1, 0, 0, 0.25)
+                    strokeWidth(0.5)
+                    rect(x * col_width + (gutter * x), y * row_height, col_width, row_height)
                 
 # --------------------------------------
-# LABEL THE GRID
+#    LABEL THE GRID
 
 def label_grid():
     with savedState():
@@ -163,7 +191,7 @@ def label_grid():
         fill(1, 0, 0, 0.5)
         font("Helvetica", 8)
     
-        for x in range(number_of_columns + 1):
+        for x in range(number_of_columns):
             text(str(x), (x_cord[str(x)], margin / -2), align="center")
         
         translate(0, (-fontCapHeight() / 2))
@@ -185,26 +213,27 @@ def label_grid():
 # --------------------------------------
 # ||||||||||||||||||||||||||||||||||||||
 # --------------------------------------
-# START DRAWING
+#    START DRAWING
 
 
 # --------------------------------------
-# TITLE PAGE
+#    TITLE PAGE
 
 new_page("")
 title_page()
 
 # --------------------------------------
-# CHARACTER SET
+#    CHARACTER SET
 
 # for i in range(3):
 #     new_page("Character Set")
     
 # --------------------------------------
-# SPACING
+#    SPACING
     
-new_page("Spacing")
-text(pi1000.pi1000(50), (0, 0))
+new_page("Numbers")
+textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
+textBox(numbers.n111(), (offset[6], 0, col_span[4], live_height))
 
 
 
@@ -212,8 +241,8 @@ text(pi1000.pi1000(50), (0, 0))
 
 
 # --------------------------------------
-# ADD PAGE NUMBERS AFTER ALL PAGES HAVE BEEN DRAWN 
-# (ALWAYS KEEP AT THE BOTTOM)
+#    ADD PAGE NUMBERS AFTER ALL PAGES HAVE BEEN DRAWN 
+#    (ALWAYS KEEP AT THE BOTTOM)
 
 # get all pages
 allPages = pages()
