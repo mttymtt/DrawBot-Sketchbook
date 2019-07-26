@@ -240,9 +240,9 @@ with savedState():
     textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
     textBox(numbers.n111(), (offset[6], 0, col_span[4], live_height))
 
-new_page("Numbers")
+new_page("Spacing")
 with savedState():
-    fontSize(48)
+    fontSize(24)
     textBox(spacing.OHno(), (0, 0, col_span[6], live_height))
     fontSize(36)
     textBox(spacing.OHno("no", "string"), (offset[6], 0, col_span[4], live_height))
