@@ -48,7 +48,7 @@ live_height = margin_height - margin
 number_of_columns = 12
 number_of_rows = 48
 
-gutter = (1/4) * inch
+gutter = (1/2) * inch
 
 col_width = (live_width - (number_of_columns - 1) * gutter) / number_of_columns
 row_height = live_height / number_of_rows
@@ -160,7 +160,7 @@ print(x_cord)
 
 col_span = list()
 for x in range(number_of_columns + 1):
-    col_span_width = ((col_width + gutter) * x) - (margin / 2)
+    col_span_width = ((col_width + gutter) * x) - (gutter)
     col_span.append(int(col_span_width))
 
 
@@ -177,12 +177,11 @@ def draw_grid():
     with savedState():
         translate(margin, margin)
         for x in range(number_of_columns):
-            for y in range(number_of_rows):
-                with savedState():
-                    fill(None)
-                    stroke(1, 0, 0, 0.25)
-                    strokeWidth(0.5)
-                    rect(x * col_width + (gutter * x), y * row_height, col_width, row_height)
+            # for y in range(number_of_rows):
+            with savedState():
+                fill(None)
+                fill(1, 0, 0, 0.05)
+                rect(x * col_width + (gutter * x), edge_bottom, col_width, live_height)
                 
 # --------------------------------------
 #    LABEL THE GRID
@@ -234,21 +233,45 @@ title_page()
 # --------------------------------------
 #    SPACING
     
-new_page("Numbers")
-with savedState():
-    fontSize(48)
-    textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
-    textBox(numbers.n111(), (offset[6], 0, col_span[4], live_height))
-
-new_page("Spacing")
+section = "Spacing"
+    
+new_page(section)
 with savedState():
     fontSize(24)
     textBox(spacing.OHno(), (0, 0, col_span[6], live_height))
     fontSize(36)
-    textBox(spacing.OHno("no", "string"), (offset[6], 0, col_span[4], live_height))
+    textBox(spacing.OHno("no", "string"), (offset[6], 0, col_span[6], live_height))
+    
+# --------------------------------------
+#    NUMBERS
 
+section = "Numbers"
 
+new_page(section)
+with savedState():
+    fontSize(48)
+    textBox(numbers.pi1000(), (0, 0, col_span[6], live_height))
+    textBox(numbers.n111(), (offset[6], 0, col_span[6], live_height))
 
+flow = numbers.pi1000()
+while len(flow) > 0:
+    new_page(section)
+    fontSize(36)
+    flow = textBox(flow, (0, 0, col_span[6], live_height))
+    flow = textBox(flow, (offset[6], 0, col_span[6], live_height))
+    
+# --------------------------------------
+#    CONTEXT
+
+section = "Context"
+
+flow = numbers.pi1000()
+while len(flow) > 0:
+    new_page(section)
+    fontSize(18)
+    flow = textBox(flow, (offset[0], 0, col_span[4], live_height))
+    flow = textBox(flow, (offset[4], 0, col_span[4], live_height))
+    flow = textBox(flow, (offset[8], 0, col_span[4], live_height))
 
 
 
@@ -273,4 +296,4 @@ for page in allPages:
             translate(0, -fontCapHeight())
             text("pg. " + str(page_number), (edge_right, edge_top), align="right" )
         
-        
+         

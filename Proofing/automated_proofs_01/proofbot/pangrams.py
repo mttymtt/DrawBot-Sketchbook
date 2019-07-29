@@ -1,61 +1,28 @@
-#!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
-
 # --------------------------------------
-#    pi1000()
+#    display()
 #    Returns string
 #    defualts to 1000 digits
 
-def pi1000(length=1000):
-    pi_len = "3141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273724587006606315588174881520920962829254091715364367892590360011330530548820466521384146951941511609433057270365759591953092186117381932611793105118548074462379962749567351885752724891227938183011949129833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132000568127145263560827785771342757789609173637178721468440901224953430146549585371050792279689258923542019956112129021960864034418159813629774771309960518707211349999998372978049951059731732816096318595024459455346908302642522308253344685035261931188171010003137838752886587533208381420617177669147303598253490428755468731159562863882353787593751957781857780532171226806613001927876611195909216420198"
-    return pi_len[0:length]
-
-
-# --------------------------------------
-#    n101()
-#    Returns string or list
-#    defualts to string
-
-def n101(arg="string"):
-    n101_string = '''1101010000
-1111010100
-1121010200
-1131010300
-1141010400
-1151010500
-1161010600
-1171010700
-1181010800
-1191010900
-'''
-    n101_list = n101_string.split("\n")
+def en(*argv):
+    dict = {
+        "Fox": "The quick brown fox jumps over the lazy dog.",
+        "Wizards": "Grumpy wizards make toxic brew for the evil Queen and Jack.",
+        "Waltz": "Jived fox nymph grabs quick waltz.",
+        "Dwarf": "Glib jocks quiz nymph to vex dwarf.",
+        "Sphinx": "Sphinx of black quartz, judge my vow.",
+        "Zebras": "How vexingly quick daft zebras jump!",
+        "Boxing": "The five boxing wizards jump quickly.",
+        "Jackdaws": "Jackdaws love my big sphinx of quartz.",
+        "Liquor": "Pack my box with five dozen liquor jugs."
+        }
+    Fox = "The quick brown fox jumps over the lazy dog."
+    Wizards = "Grumpy wizards make toxic brew for the evil Queen and Jack."
+    return argv
     
-    if arg == "string":
-        return n101_string
-    if arg == "list":
-        return n101_list
-        
+print(en(Fox))
 
-# --------------------------------------
-#    n111()
-#    Returns string or list
-#    defualts to string
-        
-def n111(arg="string"):
-    n111_string = '''111213141516171819101
-212223242526272829202
-313233343536373839303
-414243444546474849404
-515253545556575859505
-616263646566676869606
-717273747576777879707
-818283848586878889808
-919293949596979899909
-010203040506070809000
-'''
-    n111_list = n111_string.split("\n")
-    
-    if arg == "string":
-        return n111_string
-    if arg == "list":
-        return n111_list
+# def myFun(arg1, *argv): 
+#     print ("First argument :", arg1)
+#     print("Next argument through *argv :", argv) 
+  
+# myFun('Hello', 'Welcome', 'to', 'GeeksforGeeks') 
