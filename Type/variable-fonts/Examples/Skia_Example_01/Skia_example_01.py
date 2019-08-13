@@ -75,7 +75,7 @@ for frame in range(total_frames):
         font(font_name, font_size)
         fontVariations(wght = ease("wght", "start_def", "up", 1), wdth = ease("wdth", "start_def", "up", 1))
         text(txt, (w / 2, (h / 2) - fontCapHeight()), align="center")
-    print(ease("wght", "start_def", "up", 2))
+    print(ease("wght", "start_def", "up", 1))
 
 #    ========================================
 #    ========================================
