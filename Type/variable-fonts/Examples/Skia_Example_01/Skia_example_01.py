@@ -69,19 +69,29 @@ def ease(axis, start_pos, direction, passes):
 #    ========================================
 
 for frame in range(total_frames):
-    phase = 2 * pi * frame / total_frames
+    phase = 2 * pi * frame / total_frames # determine where in the phase we are (starts at 0 and goes to 2pi)
     
+    # for each frame, create a new page that we can draw on
     newPage(w, h)
     
+    # draw a white rectangle in the background (a transparent background makes for a rough animation) 
     with savedState():
-        fill(1)
+        fill(1) # if you want to change the colors, read up on them here: http://www.drawbot.com/content/color.html
         rect(0, 0, w, h)
     
+    # this is where we start to draw the type
     with savedState():
-        fill(0)
+        fill(0) # if you want to change the colors, read up on them here: http://www.drawbot.com/content/color.html
         font(font_name, font_size)
+        
+        # EASE FUNCTION
+        # This is where we reuse that ease function from above
         fontVariations(wght = ease("wght", "start_at_default", "up", 1), wdth = ease("wdth", "start_at_default", "up", 1))
+        
+        # for more on drawing text: http://www.drawbot.com/content/text/drawingText.html
         text(txt, (w / 2, (h / 2) - fontCapHeight()), align="center")
+        
+    # let's just print that ease function so we can make sure all of the values are looking correct
     print(ease("wght", "start_def", "up", 1))
 
 #    ========================================
