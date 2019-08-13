@@ -5,7 +5,7 @@ w, h = 1080, 1080
 total_frames = 40
 
 # define the font name & font size
-f_name = "Skia"
+f_name = ".SFNSDisplay"
 f_size = 100
 
 # define the text that is actually drawn
@@ -51,8 +51,12 @@ for frame in range(total_frames):
     with savedState():
         fill(0)
         font(f_name, f_size)
-        fontVariations(wght = ease("wght", "start_def", "up", 1), wdth = ease("wdth", "start_def", "up", 1))
+        fontVariations(wght = ease("wght", "start_def", "up", 1))
         text(txt, (w / 2, (h / 2) - fontCapHeight()), align="center")
-    print(ease("wght", "start_def", "up", 1))
+        
+    with savedState():
+        curr_wght = ease("wght", "start_def", "up", 1)
+        font("Helvetica", 20)
+        text("Weight: %.2f" % curr_wght, (100, 100), align="left")
     
-# saveImage("Skia_example_01.gif")
+saveImage("San-Francisco_example_01.gif")
