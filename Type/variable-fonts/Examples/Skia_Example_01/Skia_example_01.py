@@ -25,6 +25,13 @@ print( listFontVariations(font_name) ) # run this to print out what your font's 
 #    This is a re-usable function, that we
 #    can use to progressively change the
 #    value of an axis (of our choosing)
+#
+#    ease(axis, start_pos, direction, passes)
+#
+#    axis:      4 letter string ("wght", "wdth", etc.)
+#    start_pos: options are ("start_at_min", "start_at_max", or "start_at_default")
+#    direction: options are ("up" or "down") and only applies to when you "start_at_default"
+#    passes:    the number of times you'd like to cycle through the axis range
 #    
 #    ========================================
 #    ========================================
@@ -38,9 +45,9 @@ def ease(axis, start_pos, direction, passes):
     axis_scale = axis_range / 2
     vertical_shift = axis_min + axis_scale
     
-    if start_pos == "start_min":
+    if start_pos == "start_at_min":
         phase_shift = 0.5 * pi
-    if start_pos == "start_max":
+    if start_pos == "start_at_max":
         phase_shift = -0.5 * pi
     else:
         phase_shift = asin((axis_def - vertical_shift) / axis_scale) - pi
@@ -73,7 +80,7 @@ for frame in range(total_frames):
     with savedState():
         fill(0)
         font(font_name, font_size)
-        fontVariations(wght = ease("wght", "start_def", "up", 1), wdth = ease("wdth", "start_def", "up", 1))
+        fontVariations(wght = ease("wght", "start_at_default", "up", 1), wdth = ease("wdth", "start_at_default", "up", 1))
         text(txt, (w / 2, (h / 2) - fontCapHeight()), align="center")
     print(ease("wght", "start_def", "up", 1))
 
@@ -88,7 +95,7 @@ for frame in range(total_frames):
 #    
 #    ========================================
 #    ========================================
-export = True # True: save your drawing; False: don't save! (Good for testing)
+export = False # True: save your drawing; False: don't save! (Good for testing)
 
 directory = 'Exports' # This is the folder where all of the images/videos will be saved
 file_format = ".gif" # This is the format of the file you want to save out
